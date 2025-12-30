@@ -1,85 +1,193 @@
+package com.example.lifecycle;
+
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     String tag = "Lifecycle";
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(tag,"onCreate()");
+        Log.d(tag, "onCreate()");
     }
 
+    @Override
     protected void onStart() {
         super.onStart();
-        Log.d(tag,"onStart()");
+        Log.d(tag, "onStart()");
     }
 
+    @Override
     protected void onResume() {
         super.onResume();
-        Log.d(tag,"onResume()");
+        Log.d(tag, "onResume()");
     }
 
+    @Override
     protected void onPause() {
         super.onPause();
-        Log.d(tag,"onPause()");
+        Log.d(tag, "onPause()");
     }
 
+    @Override
     protected void onStop() {
         super.onStop();
-        Log.d(tag,"onStop()");
+        Log.d(tag, "onStop()");
     }
 
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(tag,"onDestroy()");
+        Log.d(tag, "onDestroy()");
     }
 }
 
 
+
 Q2
 
-Button web, call, map;
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
-web = findViewById(R.id.btnWeb);
-call = findViewById(R.id.btnCall);
-map = findViewById(R.id.btnMap);
+    <Button
+        android:id="@+id/btnWeb"
+        android:text="Web Browser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-web.setOnClickListener(v -> {
-    Intent i = new Intent(Intent.ACTION_VIEW,
-            Uri.parse("https://www.google.com"));
-    startActivity(i);
-});
+    <Button
+        android:id="@+id/btnCall"
+        android:text="Make Call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-call.setOnClickListener(v -> {
-    Intent i = new Intent(Intent.ACTION_DIAL,
-            Uri.parse("tel:9876543210"));
-    startActivity(i);
-});
+    <Button
+        android:id="@+id/btnMap"
+        android:text="Show Map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
 
-map.setOnClickListener(v -> {
-    Intent i = new Intent(Intent.ACTION_VIEW,
-            Uri.parse("geo:18.5204,73.8567"));
-    startActivity(i);
-});
+
+
+package com.example.intents;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button web = findViewById(R.id.btnWeb);
+        Button call = findViewById(R.id.btnCall);
+        Button map = findViewById(R.id.btnMap);
+
+        web.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.google.com"));
+            startActivity(i);
+        });
+
+        call.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_DIAL,
+                    Uri.parse("tel:9876543210"));
+            startActivity(i);
+        });
+
+        map.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("geo:18.5204,73.8567"));
+            startActivity(i);
+        });
+    }
+}
+
 
 
 Q1
 
-login.setOnClickListener(v -> {
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
-    if(username.getText().toString().equals("admin") &&
-       password.getText().toString().equals("admin")) {
+    <EditText
+        android:id="@+id/username"
+        android:hint="Username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        Toast.makeText(this,"Login Successful",
-                Toast.LENGTH_SHORT).show();
+    <EditText
+        android:id="@+id/password"
+        android:hint="Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        Intent i = new Intent(this, SecondActivity.class);
-        startActivity(i);
+    <Button
+        android:id="@+id/loginBtn"
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+
+package com.example.login;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText username, password;
+    Button login;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.loginBtn);
+
+        login.setOnClickListener(v -> {
+            if (username.getText().toString().equals("admin") &&
+                password.getText().toString().equals("admin")) {
+
+                Toast.makeText(this, "Login Successful",
+                        Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(this, SecondActivity.class);
+                startActivity(i);
+            } else {
+                Toast.makeText(this, "Invalid Login",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-    else {
-        Toast.makeText(this,"Invalid Login",
-                Toast.LENGTH_SHORT).show();
-    }
-});
+}
+
+
+
 
 
 
@@ -87,17 +195,35 @@ Q2
 
 
 Intent i = new Intent(this, SecondActivity.class);
-i.putExtra("fname", fname.getText().toString());
-i.putExtra("lname", lname.getText().toString());
-i.putExtra("email", email.getText().toString());
+i.putExtra("fname", "Rahul");
+i.putExtra("lname", "Patil");
+i.putExtra("email", "rahul@gmail.com");
 startActivity(i);
 
 
+package com.example.data;
 
-Intent i = getIntent();
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
-String info = "Name: " + i.getStringExtra("fname") + " "
-        + i.getStringExtra("lname")
-        + "\nEmail: " + i.getStringExtra("email");
+public class SecondActivity extends AppCompatActivity {
 
-textView.setText(info);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        TextView txt = findViewById(R.id.textView);
+
+        Intent i = getIntent();
+        String data = i.getStringExtra("fname") + " " +
+                      i.getStringExtra("lname") +
+                      "\n" + i.getStringExtra("email");
+
+        txt.setText(data);
+    }
+}
+
+
