@@ -1,0 +1,103 @@
+public class MainActivity extends AppCompatActivity {
+
+    String tag = "Lifecycle";
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d(tag,"onCreate()");
+    }
+
+    protected void onStart() {
+        super.onStart();
+        Log.d(tag,"onStart()");
+    }
+
+    protected void onResume() {
+        super.onResume();
+        Log.d(tag,"onResume()");
+    }
+
+    protected void onPause() {
+        super.onPause();
+        Log.d(tag,"onPause()");
+    }
+
+    protected void onStop() {
+        super.onStop();
+        Log.d(tag,"onStop()");
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(tag,"onDestroy()");
+    }
+}
+
+
+Q2
+
+Button web, call, map;
+
+web = findViewById(R.id.btnWeb);
+call = findViewById(R.id.btnCall);
+map = findViewById(R.id.btnMap);
+
+web.setOnClickListener(v -> {
+    Intent i = new Intent(Intent.ACTION_VIEW,
+            Uri.parse("https://www.google.com"));
+    startActivity(i);
+});
+
+call.setOnClickListener(v -> {
+    Intent i = new Intent(Intent.ACTION_DIAL,
+            Uri.parse("tel:9876543210"));
+    startActivity(i);
+});
+
+map.setOnClickListener(v -> {
+    Intent i = new Intent(Intent.ACTION_VIEW,
+            Uri.parse("geo:18.5204,73.8567"));
+    startActivity(i);
+});
+
+
+Q1
+
+login.setOnClickListener(v -> {
+
+    if(username.getText().toString().equals("admin") &&
+       password.getText().toString().equals("admin")) {
+
+        Toast.makeText(this,"Login Successful",
+                Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(this, SecondActivity.class);
+        startActivity(i);
+    }
+    else {
+        Toast.makeText(this,"Invalid Login",
+                Toast.LENGTH_SHORT).show();
+    }
+});
+
+
+
+Q2
+
+
+Intent i = new Intent(this, SecondActivity.class);
+i.putExtra("fname", fname.getText().toString());
+i.putExtra("lname", lname.getText().toString());
+i.putExtra("email", email.getText().toString());
+startActivity(i);
+
+
+
+Intent i = getIntent();
+
+String info = "Name: " + i.getStringExtra("fname") + " "
+        + i.getStringExtra("lname")
+        + "\nEmail: " + i.getStringExtra("email");
+
+textView.setText(info);
